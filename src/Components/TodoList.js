@@ -13,48 +13,30 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
 import { useState } from "react";
+import { TodosContext } from "../Contexts/TodosContext";
+import { useContext } from "react";
 
 // External libraries
 import { uid } from "uid";
 
 import Todo from "./Todo";
 
-const todosIntial = [
-  {
-    id: uid(7),
-    title: "Task1",
-    details: "Studing something 1",
-    isCompleted: false,
-  },
-  {
-    id: uid(7),
-    title: "Task2",
-    details: "Studing something 2",
-    isCompleted: false,
-  },
-  {
-    id: uid(7),
-    title: "Task3",
-    details: "Studing something 3",
-    isCompleted: false,
-  },
-];
-
 export default function TodoList() {
-  const [todos, setTodos] = useState(todosIntial);
+  const { todos, setTodos } = useContext(TodosContext);
+  console.log("============", todos);
   const [TitleInput, setAddTitleInput] = useState("");
-  function handleCheckClick(id) {
-    // alert(`${id}`);
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id == id) {
-        todo.isCompleted = !todo.isCompleted;
-      }
-      return todo;
-    });
+  // function handleCheckClick(id) {
+  //   // alert(`${id}`);
+  //   const updatedTodos = todos.map((todo) => {
+  //     if (todo.id == id) {
+  //       todo.isCompleted = !todo.isCompleted;
+  //     }
+  //     return todo;
+  //   });
 
-    // console.log(todo);
-    setTodos(updatedTodos);
-  }
+  //   // console.log(todo);
+  //   setTodos(updatedTodos);
+  // }
   function handleAddButton() {
     // alert("heloo");
     const newtodo = {
@@ -68,7 +50,7 @@ export default function TodoList() {
   }
 
   const todosJsx = todos.map((todo) => {
-    return <Todo key={todo.id} todo={todo} handleCheck={handleCheckClick} />;
+    return <Todo key={todo.id} todo={todo} />;
   });
   return (
     <Container maxWidth="md">

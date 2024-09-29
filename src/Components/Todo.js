@@ -18,10 +18,26 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-export default function Todo({ todo, handleCheck }) {
-  const [Todo, setTodo] = useState(todo);
+
+import { TodosContext } from "../Contexts/TodosContext";
+import { useContext } from "react";
+export default function Todo({ todo }) {
+  const { todos, setTodos } = useContext(TodosContext);
+  // console.log(todos);
+
   function handleCheckClick() {
-    handleCheck(todo.id);
+    // alert(`${id}`);
+    const updatedTodos = todos.map((t) => {
+      console.log("kkkkkkk", todo.id);
+      console.log("ttttt", t.id);
+      if (t.id == todo.id) {
+        t.isCompleted = !t.isCompleted;
+      }
+      return t;
+    });
+
+    // console.log(todo);
+    setTodos(updatedTodos);
   }
 
   return (
