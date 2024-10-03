@@ -12,9 +12,11 @@ import Typography from "@mui/material/Typography";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { useState } from "react";
+// import { useState } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+
+// import ModalDelete from "./ModalDelete";
 
 // External libraries
 import { uid } from "uid";
@@ -23,20 +25,8 @@ import Todo from "./Todo";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
-  console.log("============", todos);
   const [TitleInput, setAddTitleInput] = useState("");
-  // function handleCheckClick(id) {
-  //   // alert(`${id}`);
-  //   const updatedTodos = todos.map((todo) => {
-  //     if (todo.id == id) {
-  //       todo.isCompleted = !todo.isCompleted;
-  //     }
-  //     return todo;
-  //   });
 
-  //   // console.log(todo);
-  //   setTodos(updatedTodos);
-  // }
   function handleAddButton() {
     // alert("heloo");
     const newtodo = {
@@ -45,13 +35,19 @@ export default function TodoList() {
       details: "",
       isCompleted: false,
     };
-    setTodos([...todos, newtodo]);
-    setAddTitleInput(""); // Clear the input field after adding a todo
+    const updatedTodos = [...todos, newtodo];
+    setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
   }
 
   const todosJsx = todos.map((todo) => {
     return <Todo key={todo.id} todo={todo} />;
   });
+
+  useEffect(() => {
+    const storageTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(storageTodos);
+  }, []);
   return (
     <Container maxWidth="md">
       <Card sx={{ minWidth: 275 }}>

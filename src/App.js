@@ -26,11 +26,11 @@ const todosIntial = [
     isCompleted: false,
   },
 ];
-console.log("iddddd", uid(7));
+// console.log("iddddd", uid(7));
 
 function App() {
   const [todos, setTodos] = useState(todosIntial);
-  console.log("++++++++", todos);
+  // console.log("++++++++", todos);
 
   return (
     <div

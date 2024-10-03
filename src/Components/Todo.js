@@ -7,37 +7,56 @@ import CardContent from "@mui/material/CardContent";
 
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import ToggleButton from "@mui/material/ToggleButton";
+// import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { useState } from "react";
-
 // import icons
-import AddIcon from "@mui/icons-material/Add";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 import { TodosContext } from "../Contexts/TodosContext";
 import { useContext } from "react";
+// import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
+import ModalDelete from "./ModalDelete";
+import ModalEdit from "./ModalEdit";
+
 export default function Todo({ todo }) {
   const { todos, setTodos } = useContext(TodosContext);
-  // console.log(todos);
+  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
+
+  // console.log("ppppp", openDeleteModal);
 
   function handleCheckClick() {
     // alert(`${id}`);
     const updatedTodos = todos.map((t) => {
-      console.log("kkkkkkk", todo.id);
-      console.log("ttttt", t.id);
-      if (t.id == todo.id) {
+      if (t.id === todo.id) {
         t.isCompleted = !t.isCompleted;
       }
       return t;
     });
 
-    // console.log(todo);
     setTodos(updatedTodos);
+    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
+  }
+
+  // Edit button functions
+  function handleEditClick() {
+    setOpenEditModal(true);
+  }
+  function handleCloseEditModal() {
+    setOpenEditModal(false);
+  }
+  // Edit button functions
+
+  // Delete button functions
+  function handleDeleteClick() {
+    setOpenDeleteModal(true); // Open modal when delete is clicked
+  }
+  function handleCloseDeleteModal() {
+    setOpenDeleteModal(false); // Close modal
   }
 
   return (
@@ -70,14 +89,18 @@ export default function Todo({ todo }) {
               >
                 {/* Action Buttons */}
                 <ToggleButtonGroup>
+                  {/* Edit Button */}
                   <Button
                     variant="text"
                     style={{ background: "white" }}
                     className="iconButton"
                     sx={{ minHeight: 70, minWidth: 70 }}
+                    onClick={handleEditClick}
                   >
                     <EditIcon style={{ color: "#00c853" }} />
                   </Button>
+
+                  {/* // Edit Button */}
 
                   {/* Check icon button */}
                   <Button
@@ -97,9 +120,16 @@ export default function Todo({ todo }) {
                       background: "white",
                     }}
                     className="iconButton"
+                    onClick={handleDeleteClick}
                   >
                     {" "}
                     <DeleteIcon style={{ color: "red" }} />
+                    {/* <ModalDeleteContext.Provider
+                      value={{ modaleDelete, setModalDelete }}
+                    >
+                      <ModalDelete></ModalDelete>
+                    </ModalDeleteContext.Provider>
+                    ; */}
                   </Button>
                 </ToggleButtonGroup>
 
@@ -111,6 +141,18 @@ export default function Todo({ todo }) {
           {/* // Filter buttons */}
         </CardContent>
       </Card>
+
+      {/* Modal for delete confirmation */}
+      <ModalDelete
+        open={openDeleteModal}
+        onClose={handleCloseDeleteModal}
+        todo={todo}
+      />
+      <ModalEdit
+        open={openEditModal}
+        onClose={handleCloseEditModal}
+        todo={todo}
+      />
     </>
   );
 }
