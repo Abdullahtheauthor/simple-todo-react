@@ -72,7 +72,9 @@ export default function Todo({ todo }) {
               <Typography
                 sx={{ textAlign: "left" }}
                 variant="h3"
-                // style={{ background: "red" }}
+                style={{
+                  textDecoration: todo.isCompleted ? "line-through" : "none",
+                }}
               >
                 {todo.title}
               </Typography>
