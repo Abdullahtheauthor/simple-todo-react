@@ -31,7 +31,7 @@ export default function Todo({ todo }) {
 
   function handleCheckClick() {
     // alert(`${id}`);
-    const updatedTodos = todos.map((t) => {
+    const updatedTodos = JSON.parse(localStorage.getItem("todos")).map((t) => {
       if (t.id === todo.id) {
         t.isCompleted = !t.isCompleted;
       }

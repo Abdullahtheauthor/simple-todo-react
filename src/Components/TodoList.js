@@ -27,6 +27,33 @@ export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [TitleInput, setAddTitleInput] = useState("");
 
+  function handleAllFilter() {
+    const allTodos = JSON.parse(localStorage.getItem("todos"));
+    console.log("allTodos", allTodos);
+    setTodos(allTodos);
+  }
+  // Hnadle Done filter
+  function handleDoneFilter() {
+    const completedTodos = JSON.parse(localStorage.getItem("todos")).filter(
+      (t) => {
+        return t.isCompleted === true;
+      }
+    );
+    console.log("completedTodos", completedTodos);
+    setTodos(completedTodos);
+  }
+
+  // Hnadle Not Done filter
+  function handleUndoneFilter() {
+    const uncompletedTodos = JSON.parse(localStorage.getItem("todos")).filter(
+      (t) => {
+        return t.isCompleted === false;
+      }
+    );
+    console.log("uncompletedTodos", uncompletedTodos);
+    setTodos(uncompletedTodos);
+  }
+
   function handleAddButton() {
     // alert("heloo");
     const newtodo = {
@@ -64,11 +91,17 @@ export default function TodoList() {
             exclusive
             // onChange={handleAlignment}
           >
-            <ToggleButton value="left">All</ToggleButton>
+            <ToggleButton value="left" onClick={handleAllFilter}>
+              All
+            </ToggleButton>
 
-            <ToggleButton value="center">Done</ToggleButton>
+            <ToggleButton value="center" onClick={handleDoneFilter}>
+              Done
+            </ToggleButton>
 
-            <ToggleButton value="right">Not Done</ToggleButton>
+            <ToggleButton value="right" onClick={handleUndoneFilter}>
+              Not Done
+            </ToggleButton>
           </ToggleButtonGroup>
 
           {/* // Filter buttons */}
