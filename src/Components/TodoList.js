@@ -38,6 +38,7 @@ export default function TodoList() {
 
   function handleAddButton() {
     // alert("heloo");
+
     const newtodo = {
       id: uid(7),
       title: TitleInput,
@@ -127,6 +128,7 @@ export default function TodoList() {
               onClick={() => {
                 handleAddButton();
               }}
+              disabled={TitleInput.length == 0 ? true : false}
             >
               Add
             </Button>
