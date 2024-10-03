@@ -15,7 +15,7 @@ import { TodosContext } from "../Contexts/TodosContext";
 export default function ModalDelete({ open, onClose, todo }) {
   const { todos, setTodos } = useContext(TodosContext);
 
-  console.log("inside delete module", open);
+  // console.log("inside delete module", open);
 
   function handleDeleteConfirm() {
     console.log(`Deleting todo with id: ${todo.id}`);

@@ -26,6 +26,15 @@ import Todo from "./Todo";
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [TitleInput, setAddTitleInput] = useState("");
+  const [filterDisplay, setfilterDisplay] = useState("All");
+
+  // function handleFilter(e){
+  //   if
+  // }
+
+  function changeDisplayType(e) {
+    setfilterDisplay(e.target.value);
+  }
 
   function handleAddButton() {
     // alert("heloo");
@@ -40,14 +49,34 @@ export default function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
   }
 
-  const todosJsx = todos.map((todo) => {
-    return <Todo key={todo.id} todo={todo} />;
-  });
-
+  // For the first render
   useEffect(() => {
     const storageTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(storageTodos);
   }, []);
+
+  // What to render
+  let renderedtodos = todos;
+  if (filterDisplay === "Done") {
+    renderedtodos = todos.filter((t) => {
+      return t.isCompleted;
+    });
+    console.log("Done", renderedtodos);
+  } else if (filterDisplay === "Not Done") {
+    renderedtodos = todos.filter((t) => {
+      return !t.isCompleted;
+    });
+    console.log("Not Done", renderedtodos);
+  } else {
+    renderedtodos = todos;
+  }
+  // console.log(renderedtodos);
+  console.log("filterDisplay", filterDisplay);
+
+  const todosJsx = renderedtodos.map((t) => {
+    return <Todo key={t.id} todo={t} />;
+  });
+
   return (
     <Container maxWidth="md">
       <Card sx={{ minWidth: 275 }}>
@@ -59,16 +88,16 @@ export default function TodoList() {
 
           {/* Filter buttons */}
           <ToggleButtonGroup
-            // value={alignment}
+            value={filterDisplay}
             style={{ marginTop: "30px" }}
             exclusive
-            // onChange={handleAlignment}
+            onChange={changeDisplayType}
           >
-            <ToggleButton value="left">All</ToggleButton>
+            <ToggleButton value="All">All</ToggleButton>
 
-            <ToggleButton value="center">Done</ToggleButton>
+            <ToggleButton value="Done">Done</ToggleButton>
 
-            <ToggleButton value="right">Not Done</ToggleButton>
+            <ToggleButton value="Not Done">Not Done</ToggleButton>
           </ToggleButtonGroup>
 
           {/* // Filter buttons */}
