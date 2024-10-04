@@ -52,7 +52,7 @@ export default function TodoList() {
 
   // For the first render
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem("todos"));
+    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
     setTodos(storageTodos);
   }, []);
 
@@ -80,7 +80,10 @@ export default function TodoList() {
 
   return (
     <Container maxWidth="md">
-      <Card sx={{ minWidth: 275 }}>
+      <Card
+        sx={{ minWidth: 275 }}
+        style={{ maxHeight: "80vh", overflow: "auto" }}
+      >
         <CardContent>
           <Typography sx={{}} variant="h2">
             My Tasks

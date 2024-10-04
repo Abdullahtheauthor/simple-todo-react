@@ -39,8 +39,8 @@ function App() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
-        background: "green",
+        // height: "100vh",
+        // background: "green",
       }}
     >
       <TodosContext.Provider value={{ todos, setTodos }}>
