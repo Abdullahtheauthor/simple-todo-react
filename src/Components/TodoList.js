@@ -17,7 +17,7 @@ import ModalEdit from "./ModalEdit";
 
 // import { useState } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 
 // import ModalDelete from "./ModalDelete";
 
@@ -65,16 +65,21 @@ export default function TodoList() {
 
   // What to render
   let renderedtodos = todos;
-  if (filterDisplay === "Done") {
-    renderedtodos = todos.filter((t) => {
+  const completedTods = useMemo(() => {
+    todos.filter((t) => {
       return t.isCompleted;
     });
-    console.log("Done", renderedtodos);
-  } else if (filterDisplay === "Not Done") {
-    renderedtodos = todos.filter((t) => {
+  });
+  const incompletedTodos = useMemo(() => {
+    todos.filter((t) => {
       return !t.isCompleted;
     });
-    console.log("Not Done", renderedtodos);
+  });
+
+  if (filterDisplay === "Done") {
+    renderedtodos = completedTods;
+  } else if (filterDisplay === "Not Done") {
+    renderedtodos = incompletedTodos;
   } else {
     renderedtodos = todos;
   }
@@ -83,6 +88,7 @@ export default function TodoList() {
 
   // // Delete button functions
 
+  // handlers
   function handleDeleteClick(todo) {
     setTodoToDelete(todo);
 
