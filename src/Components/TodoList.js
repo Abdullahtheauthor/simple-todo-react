@@ -12,6 +12,9 @@ import Typography from "@mui/material/Typography";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
+import ModalDelete from "./ModalDelete";
+import ModalEdit from "./ModalEdit";
+
 // import { useState } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
 import { useContext, useEffect, useState } from "react";
@@ -27,6 +30,10 @@ export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
   const [TitleInput, setAddTitleInput] = useState("");
   const [filterDisplay, setfilterDisplay] = useState("All");
+  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
+  const [openEditModal, setOpenEditModal] = React.useState(false);
+  const [todoToDelete, setTodoToDelete] = React.useState(null);
+  const [todoToEdit, setTodoToEdit] = React.useState(null);
 
   // function handleFilter(e){
   //   if
@@ -74,8 +81,40 @@ export default function TodoList() {
   // console.log(renderedtodos);
   console.log("filterDisplay", filterDisplay);
 
+  // // Delete button functions
+
+  function handleDeleteClick(todo) {
+    setTodoToDelete(todo);
+
+    console.log("from todo list", todo);
+    setOpenDeleteModal(true); // Open modal when delete is clicked
+  }
+  function handleCloseDeleteModal() {
+    setOpenDeleteModal(false); // Close modal
+  }
+
+  function handleEditClick(todo) {
+    setOpenEditModal(true);
+    console.log("from todo eddiiiiit list", todo);
+    setTodoToEdit(todo);
+  }
+
+  function handleCloseEditModal() {
+    setOpenEditModal(false);
+  }
+  function handleCloseEditModal() {
+    setOpenEditModal(false);
+  }
+
   const todosJsx = renderedtodos.map((t) => {
-    return <Todo key={t.id} todo={t} />;
+    return (
+      <Todo
+        key={t.id}
+        todo={t}
+        deleteClick={handleDeleteClick}
+        editClick={handleEditClick}
+      />
+    );
   });
 
   return (
@@ -142,6 +181,18 @@ export default function TodoList() {
           <Button size="normal">Learn More</Button>
         </CardActions>
       </Card>
+      {/* Modal for delete confirmation */}
+      <ModalDelete
+        open={openDeleteModal}
+        onClose={handleCloseDeleteModal}
+        todo={todoToDelete}
+      />
+
+      <ModalEdit
+        open={openEditModal}
+        onClose={handleCloseEditModal}
+        todo={todoToEdit}
+      />
     </Container>
   );
 }

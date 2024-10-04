@@ -19,13 +19,11 @@ import CheckIcon from "@mui/icons-material/Check";
 import { TodosContext } from "../Contexts/TodosContext";
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
-import ModalDelete from "./ModalDelete";
-import ModalEdit from "./ModalEdit";
+// import ModalDelete from "./ModalDelete";
 
-export default function Todo({ todo }) {
+export default function Todo({ todo, deleteClick, editClick }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
-  const [openEditModal, setOpenEditModal] = React.useState(false);
+  // const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
   // console.log("ppppp", openDeleteModal);
 
@@ -44,20 +42,19 @@ export default function Todo({ todo }) {
 
   // Edit button functions
   function handleEditClick() {
-    setOpenEditModal(true);
+    editClick(todo);
   }
-  function handleCloseEditModal() {
-    setOpenEditModal(false);
-  }
+
   // Edit button functions
 
   // Delete button functions
   function handleDeleteClick() {
-    setOpenDeleteModal(true); // Open modal when delete is clicked
+    deleteClick(todo);
+    // Open modal when delete is clicked
   }
-  function handleCloseDeleteModal() {
-    setOpenDeleteModal(false); // Close modal
-  }
+  // function handleCloseDeleteModal() {
+  //   setOpenDeleteModal(false); // Close modal
+  // }
 
   return (
     <>
@@ -143,18 +140,6 @@ export default function Todo({ todo }) {
           {/* // Filter buttons */}
         </CardContent>
       </Card>
-
-      {/* Modal for delete confirmation */}
-      <ModalDelete
-        open={openDeleteModal}
-        onClose={handleCloseDeleteModal}
-        todo={todo}
-      />
-      <ModalEdit
-        open={openEditModal}
-        onClose={handleCloseEditModal}
-        todo={todo}
-      />
     </>
   );
 }

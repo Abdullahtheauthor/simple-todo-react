@@ -19,7 +19,7 @@ export default function ModalEdit({ open, onClose, todo }) {
     details: todo.details,
   });
 
-  const handleUpdateConfirm = () => {
+  const handleUpdateConfirmClick = () => {
     // alert("Hello");
     const updatedTodovar = todos.map((t) => {
       if (t.id === todo.id) {
@@ -89,7 +89,7 @@ export default function ModalEdit({ open, onClose, todo }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button type="submit" onClick={handleUpdateConfirm}>
+        <Button type="submit" onClick={handleUpdateConfirmClick}>
           Confirm
         </Button>
         <Button onClick={handleClose}>Cancel</Button>
