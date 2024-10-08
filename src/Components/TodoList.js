@@ -17,6 +17,8 @@ import ModalEdit from "./ModalEdit";
 
 // import { useState } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
+import { ToastContext } from "../Contexts/ToastContext";
+
 import { useContext, useEffect, useState, useMemo } from "react";
 
 // import ModalDelete from "./ModalDelete";
@@ -28,16 +30,13 @@ import Todo from "./Todo";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
+  const { showHideToast } = useContext(ToastContext);
   const [TitleInput, setAddTitleInput] = useState("");
   const [filterDisplay, setfilterDisplay] = useState("All");
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
   const [openEditModal, setOpenEditModal] = React.useState(false);
   const [todoToDelete, setTodoToDelete] = React.useState(null);
   const [todoToEdit, setTodoToEdit] = React.useState(null);
-
-  // function handleFilter(e){
-  //   if
-  // }
 
   function changeDisplayType(e) {
     setfilterDisplay(e.target.value);
@@ -55,6 +54,7 @@ export default function TodoList() {
     const updatedTodos = [...todos, newtodo];
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
+    showHideToast();
   }
 
   // For the first render

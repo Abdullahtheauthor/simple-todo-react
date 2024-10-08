@@ -1,7 +1,10 @@
 // import { Reddit } from "@mui/icons-material";
 import "./App.css";
+import MySnackBar from "./Components/MySnackBar";
 import TodoList from "./Components/TodoList";
 import { TodosContext } from "./Contexts/TodosContext";
+import { ToastContext } from "./Contexts/ToastContext";
+
 import { useState } from "react";
 
 import { uid } from "uid";
@@ -30,23 +33,33 @@ const todosIntial = [
 
 function App() {
   const [todos, setTodos] = useState(todosIntial);
-  // console.log("++++++++", todos);
+  const [open, setOpen] = useState(false);
+
+  function showHideToast() {
+    setOpen(true);
+    setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+  }
 
   return (
-    <div
-      className="App"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        // height: "100vh",
-        // background: "green",
-      }}
-    >
-      <TodosContext.Provider value={{ todos, setTodos }}>
-        <TodoList />
-      </TodosContext.Provider>
-    </div>
+    <ToastContext.Provider value={{ showHideToast }}>
+      <div
+        className="App"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          // height: "100vh",
+          // background: "green",
+        }}
+      >
+        <MySnackBar open={open}></MySnackBar>
+        <TodosContext.Provider value={{ todos, setTodos }}>
+          <TodoList />
+        </TodosContext.Provider>
+      </div>
+    </ToastContext.Provider>
   );
 }
 
