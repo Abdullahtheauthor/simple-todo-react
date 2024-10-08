@@ -17,7 +17,7 @@ import ModalEdit from "./ModalEdit";
 
 // import { useState } from "react";
 import { TodosContext } from "../Contexts/TodosContext";
-import { ToastContext } from "../Contexts/ToastContext";
+import { useToast } from "../Contexts/ToastContext";
 
 import { useContext, useEffect, useState, useMemo } from "react";
 
@@ -30,7 +30,7 @@ import Todo from "./Todo";
 
 export default function TodoList() {
   const { todos, setTodos } = useContext(TodosContext);
-  const { showHideToast } = useContext(ToastContext);
+  const { showHideToast } = useToast();
   const [TitleInput, setAddTitleInput] = useState("");
   const [filterDisplay, setfilterDisplay] = useState("All");
   const [openDeleteModal, setOpenDeleteModal] = React.useState(false);

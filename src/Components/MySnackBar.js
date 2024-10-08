@@ -5,18 +5,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function MySnackBar({ open, message }) {
-  //   const handleClick = () => {
-  //     setOpen(true);
-  //   };
-
-  //   const handleClose = (event, reason) => {
-  //     if (reason === "clickaway") {
-  //       return;
-  //     }
-
-  //     setOpen(false);
-  //   };
-
   const action = (
     <React.Fragment>
       <Button color="secondary" size="small">

@@ -3,7 +3,7 @@ import "./App.css";
 import MySnackBar from "./Components/MySnackBar";
 import TodoList from "./Components/TodoList";
 import { TodosContext } from "./Contexts/TodosContext";
-import { ToastContext } from "./Contexts/ToastContext";
+import { ToastContext, ToastProvider } from "./Contexts/ToastContext";
 
 import { useState } from "react";
 
@@ -33,19 +33,19 @@ const todosIntial = [
 
 function App() {
   const [todos, setTodos] = useState(todosIntial);
-  const [open, setOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  // const [open, setOpen] = useState(false);
+  // const [toastMessage, setToastMessage] = useState("");
 
-  function showHideToast(message) {
-    setOpen(true);
-    setTimeout(() => {
-      setOpen(false);
-    }, 2000);
-    setToastMessage(message);
-  }
+  // function showHideToast(message) {
+  //   setOpen(true);
+  //   setTimeout(() => {
+  //     setOpen(false);
+  //   }, 2000);
+  //   setToastMessage(message);
+  // }
 
   return (
-    <ToastContext.Provider value={{ showHideToast }}>
+    <ToastProvider>
       <div
         className="App"
         style={{
@@ -56,12 +56,11 @@ function App() {
           // background: "green",
         }}
       >
-        <MySnackBar open={open} message={toastMessage}></MySnackBar>
         <TodosContext.Provider value={{ todos, setTodos }}>
           <TodoList />
         </TodosContext.Provider>
       </div>
-    </ToastContext.Provider>
+    </ToastProvider>
   );
 }
 

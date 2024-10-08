@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 
 import { TodosContext } from "../Contexts/TodosContext";
-import { ToastContext } from "../Contexts/ToastContext";
+import { useToast } from "../Contexts/ToastContext";
 
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
@@ -25,7 +25,7 @@ import { useContext } from "react";
 
 export default function Todo({ todo, deleteClick, editClick }) {
   const { todos, setTodos } = useContext(TodosContext);
-  const { showHideToast } = useContext(ToastContext);
+  const { showHideToast } = useToast();
 
   // const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
