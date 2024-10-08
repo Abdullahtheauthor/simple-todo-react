@@ -34,12 +34,14 @@ const todosIntial = [
 function App() {
   const [todos, setTodos] = useState(todosIntial);
   const [open, setOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
-  function showHideToast() {
+  function showHideToast(message) {
     setOpen(true);
     setTimeout(() => {
       setOpen(false);
     }, 2000);
+    setToastMessage(message);
   }
 
   return (
@@ -54,7 +56,7 @@ function App() {
           // background: "green",
         }}
       >
-        <MySnackBar open={open}></MySnackBar>
+        <MySnackBar open={open} message={toastMessage}></MySnackBar>
         <TodosContext.Provider value={{ todos, setTodos }}>
           <TodoList />
         </TodosContext.Provider>

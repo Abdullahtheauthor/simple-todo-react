@@ -17,12 +17,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 
 import { TodosContext } from "../Contexts/TodosContext";
+import { ToastContext } from "../Contexts/ToastContext";
+
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
 // import ModalDelete from "./ModalDelete";
 
 export default function Todo({ todo, deleteClick, editClick }) {
   const { todos, setTodos } = useContext(TodosContext);
+  const { showHideToast } = useContext(ToastContext);
+
   // const [openDeleteModal, setOpenDeleteModal] = React.useState(false);
 
   // console.log("ppppp", openDeleteModal);
@@ -33,11 +37,17 @@ export default function Todo({ todo, deleteClick, editClick }) {
       if (t.id === todo.id) {
         t.isCompleted = !t.isCompleted;
       }
+
       return t;
     });
 
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
+    if (todo.isCompleted) {
+      showHideToast("The task is now completed");
+    } else {
+      showHideToast("The task is not completed");
+    }
   }
 
   // Edit button functions

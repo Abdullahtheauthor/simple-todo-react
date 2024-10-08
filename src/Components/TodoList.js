@@ -54,7 +54,8 @@ export default function TodoList() {
     const updatedTodos = [...todos, newtodo];
     setTodos(updatedTodos);
     localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
-    showHideToast();
+    setAddTitleInput("");
+    showHideToast("Successfuly added a new task");
   }
 
   // For the first render
