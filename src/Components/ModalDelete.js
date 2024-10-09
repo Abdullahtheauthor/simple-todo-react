@@ -8,13 +8,11 @@ import { DialogActions, DialogContent } from "@mui/material";
 
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
-import { TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
 
-// const emails = ["username@gmail.com"];
-
 export default function ModalDelete({ open, onClose, todo }) {
-  const { todos, setTodos } = useContext(TodosContext);
+  const { todos, setTodos } = useTodo();
   const { showHideToast } = useToast();
 
   console.log("inside delete module==========", open);
