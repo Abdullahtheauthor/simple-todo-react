@@ -16,12 +16,10 @@ import ModalDelete from "./ModalDelete";
 import ModalEdit from "./ModalEdit";
 
 // import { useState } from "react";
-import { TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
 
-import { useContext, useEffect, useState, useMemo } from "react";
-
-// import ModalDelete from "./ModalDelete";
+import { useEffect, useState, useMemo } from "react";
 
 // External libraries
 import { uid } from "uid";
@@ -29,7 +27,7 @@ import { uid } from "uid";
 import Todo from "./Todo";
 
 export default function TodoList() {
-  const { todos, setTodos } = useContext(TodosContext);
+  const { todos, setTodos } = useTodo();
   const { showHideToast } = useToast();
   const [TitleInput, setAddTitleInput] = useState("");
   const [filterDisplay, setfilterDisplay] = useState("All");
@@ -43,8 +41,6 @@ export default function TodoList() {
   }
 
   function handleAddButton() {
-    // alert("heloo");
-
     const newtodo = {
       id: uid(7),
       title: TitleInput,

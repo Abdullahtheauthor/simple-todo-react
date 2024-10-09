@@ -16,15 +16,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CheckIcon from "@mui/icons-material/Check";
 
-import { TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
 
-import { useContext } from "react";
-// import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
-// import ModalDelete from "./ModalDelete";
-
 export default function Todo({ todo, deleteClick, editClick }) {
-  const { todos, setTodos } = useContext(TodosContext);
+  const { todos, setTodos } = useTodo();
+
   const { showHideToast } = useToast();
 
   // const [openDeleteModal, setOpenDeleteModal] = React.useState(false);

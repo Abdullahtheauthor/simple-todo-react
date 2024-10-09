@@ -7,11 +7,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { useContext, useEffect, useState } from "react";
-import { TodosContext } from "../Contexts/TodosContext";
+import { useTodo } from "../Contexts/TodosContext";
+
 import { useToast } from "../Contexts/ToastContext";
 
 export default function ModalEdit({ open, onClose, todo }) {
-  const { todos, setTodos } = useContext(TodosContext);
+  // const { todos, setTodos } = useContext(TodosContext);
+  const { todos, setTodos } = useTodo();
+
   const { showHideToast } = useToast();
 
   // Initialize state for the updatedTodo
