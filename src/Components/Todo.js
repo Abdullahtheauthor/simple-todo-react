@@ -20,7 +20,8 @@ import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
 
 export default function Todo({ todo, deleteClick, editClick }) {
-  const { todos, setTodos } = useTodo();
+  // const { todos, setTodos } = useTodo();
+  const { todos, dispatch } = useTodo();
 
   const { showHideToast } = useToast();
 
@@ -29,17 +30,12 @@ export default function Todo({ todo, deleteClick, editClick }) {
   // console.log("ppppp", openDeleteModal);
 
   function handleCheckClick() {
-    // alert(`${id}`);
-    const updatedTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        t.isCompleted = !t.isCompleted;
-      }
+    console.log(`loggggg`, todo);
 
-      return t;
+    dispatch({
+      type: "checked",
+      payload: todo,
     });
-
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
     if (todo.isCompleted) {
       showHideToast("The task is now completed");
     } else {

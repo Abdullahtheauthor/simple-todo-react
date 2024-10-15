@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
-import { useState } from "react";
+import TodosReducer from "../Reducers/TodosReducer";
+import { useState, useReducer } from "react";
 
 import { uid } from "uid";
 
@@ -27,9 +28,11 @@ const todosIntial = [
 ];
 
 export const TodoProvider = ({ children }) => {
-  const [todos, setTodos] = useState(todosIntial);
+  // const [todos, setTodos] = useState(todosIntial);
+  const [todos, dispatch] = useReducer(TodosReducer, []);
+
   return (
-    <TodosContext.Provider value={{ todos, setTodos }}>
+    <TodosContext.Provider value={{ todos, dispatch }}>
       {children}
     </TodosContext.Provider>
   );

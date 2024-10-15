@@ -13,7 +13,7 @@ import { useToast } from "../Contexts/ToastContext";
 
 export default function ModalEdit({ open, onClose, todo }) {
   // const { todos, setTodos } = useContext(TodosContext);
-  const { todos, setTodos } = useTodo();
+  const { todos, dispatch } = useTodo();
 
   const { showHideToast } = useToast();
 
@@ -38,19 +38,13 @@ export default function ModalEdit({ open, onClose, todo }) {
   }, [todo]); // This will trigger whenever the `todo` prop changes
 
   const handleUpdateConfirmClick = () => {
-    const updatedTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        t.title = updatedTodo.title;
-        t.details = updatedTodo.details;
-        return t;
-      }
-      showHideToast(`Successfully updated the task`);
-
-      return t;
+    console.log("todo inside modale edit ------", todo);
+    console.log("09099", todo.title);
+    dispatch({
+      type: "editTodo",
+      payload: updatedTodo,
     });
 
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
     onClose();
   };
 
@@ -76,9 +70,7 @@ export default function ModalEdit({ open, onClose, todo }) {
           fullWidth
           variant="outlined" // Use the same variant for both fields
           value={updatedTodo.title} // Correctly bind to updatedTodo state
-          onChange={(e) =>
-            setUpdatedTodo({ ...updatedTodo, title: e.target.value })
-          }
+          onChange={(e) => setUpdatedTodo({ ...todo, title: e.target.value })}
         />
         <TextField
           required
@@ -88,9 +80,7 @@ export default function ModalEdit({ open, onClose, todo }) {
           fullWidth
           variant="outlined" // Consistent variant
           value={updatedTodo.details} // Correctly bind to updatedTodo state
-          onChange={(e) =>
-            setUpdatedTodo({ ...updatedTodo, details: e.target.value })
-          }
+          onChange={(e) => setUpdatedTodo({ ...todo, details: e.target.value })}
         />
       </DialogContent>
       <DialogActions>

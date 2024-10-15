@@ -8,19 +8,16 @@ import { DialogActions, DialogContent } from "@mui/material";
 
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
-import { useTodo } from "../Contexts/TodosContext";
+// import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
-import { useReducer } from "react";
-
-import TodosReducer from "../Reducers/TodosReducer";
+import { useTodo } from "../Contexts/TodosContext";
 
 export default function ModalDelete({ open, onClose, todo }) {
-  // const { todos2, setTodos } = useTodo();
-  const [todos, dispatch] = useReducer(TodosReducer, []);
+  const { todos, dispatch } = useTodo();
 
   const { showHideToast } = useToast();
 
-  console.log("inside delete module==========", open);
+  // console.log("inside delete module==========", open);
 
   function handleDeleteConfirm() {
     console.log("from Modal delete confirm ", todo);
