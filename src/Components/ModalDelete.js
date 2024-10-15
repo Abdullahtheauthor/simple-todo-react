@@ -8,26 +8,23 @@ import { DialogActions, DialogContent } from "@mui/material";
 
 import { useContext } from "react";
 // import { ModalDeleteContext } from "../Contexts/ModalDeleteContext";
-import { useTodo } from "../Contexts/TodosContext";
+// import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
+import { useTodo } from "../Contexts/TodosContext";
 
 export default function ModalDelete({ open, onClose, todo }) {
-  const { todos, setTodos } = useTodo();
+  const { todos, dispatch } = useTodo();
+
   const { showHideToast } = useToast();
 
-  console.log("inside delete module==========", open);
-  console.log("from Modal delete ", todo);
+  // console.log("inside delete module==========", open);
 
   function handleDeleteConfirm() {
-    console.log(`Deleting todo with id: ${todo.id}`);
-
-    const updatedTodos = todos.filter((t) => {
-      return t.id !== todo.id;
+    console.log("from Modal delete confirm ", todo);
+    dispatch({
+      type: "deleteTodo",
+      payload: todo,
     });
-
-    console.log("t.iddddd", updatedTodos);
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
     showHideToast("The task is deleted successfully");
     onClose(); // Close modal after deletion
   }

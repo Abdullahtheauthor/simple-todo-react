@@ -19,15 +19,15 @@ import ModalEdit from "./ModalEdit";
 import { useTodo } from "../Contexts/TodosContext";
 import { useToast } from "../Contexts/ToastContext";
 
-import { useEffect, useState, useMemo } from "react";
-
-// External libraries
-import { uid } from "uid";
+import { useEffect, useState, useMemo, useReducer } from "react";
 
 import Todo from "./Todo";
+// import reducer from "../Reducers/TodosReducer";
 
 export default function TodoList() {
-  const { todos, setTodos } = useTodo();
+  const storageTodo = JSON.parse(localStorage.getItem("todos")) ?? [];
+  const { todos, dispatch } = useTodo();
+  // const [todos, dispatch] = useReducer(TodosReducer, []);
   const { showHideToast } = useToast();
   const [TitleInput, setAddTitleInput] = useState("");
   const [filterDisplay, setfilterDisplay] = useState("All");
@@ -41,23 +41,19 @@ export default function TodoList() {
   }
 
   function handleAddButton() {
-    const newtodo = {
-      id: uid(7),
-      title: TitleInput,
-      details: "",
-      isCompleted: false,
-    };
-    const updatedTodos = [...todos, newtodo];
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos)); // Clear the input field after adding a todo
-    setAddTitleInput("");
+    dispatch({
+      type: "addTodo",
+      payload: { newTitle: TitleInput },
+    });
+    setAddTitleInput(""); // Clear the input field after adding a todo
     showHideToast("Successfuly added a new task");
   }
 
   // For the first render
   useEffect(() => {
-    const storageTodos = JSON.parse(localStorage.getItem("todos")) ?? [];
-    setTodos(storageTodos);
+    dispatch({
+      type: "get",
+    });
   }, []);
 
   // What to render
@@ -81,7 +77,7 @@ export default function TodoList() {
     renderedtodos = todos;
   }
   // console.log(renderedtodos);
-  console.log("filterDisplay", filterDisplay);
+  // console.log("filterDisplay", filterDisplay);
 
   // // Delete button functions
 
