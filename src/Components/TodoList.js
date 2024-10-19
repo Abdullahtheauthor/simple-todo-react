@@ -59,12 +59,12 @@ export default function TodoList() {
   // What to render
   let renderedtodos = todos;
   const completedTods = useMemo(() => {
-    todos.filter((t) => {
+    return todos.filter((t) => {
       return t.isCompleted;
     });
   });
   const incompletedTodos = useMemo(() => {
-    todos.filter((t) => {
+    return todos.filter((t) => {
       return !t.isCompleted;
     });
   });
